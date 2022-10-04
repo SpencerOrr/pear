@@ -53,6 +53,8 @@
             this.changeOutput = new System.Windows.Forms.Label();
             this.changeInput = new System.Windows.Forms.TextBox();
             this.recipteTitle = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // logoLabel
@@ -81,6 +83,7 @@
             // printButton
             // 
             this.printButton.BackColor = System.Drawing.SystemColors.ControlText;
+            this.printButton.Enabled = false;
             this.printButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.printButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.printButton.Location = new System.Drawing.Point(64, 463);
@@ -94,6 +97,7 @@
             // newOrderButton
             // 
             this.newOrderButton.BackColor = System.Drawing.SystemColors.ControlText;
+            this.newOrderButton.Enabled = false;
             this.newOrderButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.newOrderButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.newOrderButton.Location = new System.Drawing.Point(326, 463);
@@ -102,6 +106,7 @@
             this.newOrderButton.TabIndex = 3;
             this.newOrderButton.Text = "New Order";
             this.newOrderButton.UseVisualStyleBackColor = false;
+            this.newOrderButton.Click += new System.EventHandler(this.newOrderButton_Click);
             // 
             // galaLabel
             // 
@@ -248,6 +253,7 @@
             // changeButton
             // 
             this.changeButton.BackColor = System.Drawing.SystemColors.ControlText;
+            this.changeButton.Enabled = false;
             this.changeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.changeButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.changeButton.Location = new System.Drawing.Point(53, 374);
@@ -284,9 +290,9 @@
             // 
             this.changeOutput.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.changeOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.changeOutput.Location = new System.Drawing.Point(192, 421);
+            this.changeOutput.Location = new System.Drawing.Point(141, 421);
             this.changeOutput.Name = "changeOutput";
-            this.changeOutput.Size = new System.Drawing.Size(78, 18);
+            this.changeOutput.Size = new System.Drawing.Size(129, 18);
             this.changeOutput.TabIndex = 22;
             // 
             // changeInput
@@ -296,6 +302,7 @@
             this.changeInput.Name = "changeInput";
             this.changeInput.Size = new System.Drawing.Size(78, 24);
             this.changeInput.TabIndex = 23;
+            this.changeInput.Text = "0";
             // 
             // recipteTitle
             // 
@@ -306,12 +313,26 @@
             this.recipteTitle.Size = new System.Drawing.Size(217, 45);
             this.recipteTitle.TabIndex = 24;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.pictureBox1.ErrorImage = null;
+            this.pictureBox1.Image = global::pear.Properties.Resources.pearLogo;
+            this.pictureBox1.InitialImage = null;
+            this.pictureBox1.Location = new System.Drawing.Point(192, -2);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(81, 44);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 25;
+            this.pictureBox1.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(491, 509);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.recipteTitle);
             this.Controls.Add(this.changeInput);
             this.Controls.Add(this.changeOutput);
@@ -341,6 +362,7 @@
             this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Form1";
             this.Text = "Pear";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -372,6 +394,7 @@
         private System.Windows.Forms.Label changeOutput;
         private System.Windows.Forms.TextBox changeInput;
         private System.Windows.Forms.Label recipteTitle;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

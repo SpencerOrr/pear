@@ -24,8 +24,9 @@ namespace pear
 {
     public partial class Form1 : Form
     {
-        double galaPrice = 2.5;
-        double honeycrispPrice = 4;
+        //create the variables needed
+        double galaPrice = 2;
+        double honeycrispPrice= 4;
         double grannySmithPrice = 5;
         double galaAmount = 0;
         double honeycrispAmount = 0;
@@ -36,7 +37,8 @@ namespace pear
         double subtotal = 0;
         double change = 0;
         double totalChange = 0;
-
+        //the print sound 
+        SoundPlayer receipt = new SoundPlayer(Properties.Resources.Receipt);
         public Form1()
         {
             InitializeComponent();
@@ -44,11 +46,14 @@ namespace pear
 
         private void calculateButton_Click(object sender, EventArgs e)
         {
+            //calculates the subtotal, tax and total
             try
             {
                 galaAmount = Convert.ToDouble(galaInput.Text);
                 honeycrispAmount = Convert.ToDouble(honeycrispInput.Text);
                 grannySmithAmount = Convert.ToDouble(grannySmithInput.Text);
+                if (galaAmount + honeycrispAmount + grannySmithAmount < 500)
+                    { 
                 subtotal = galaAmount * galaPrice + honeycrispAmount * honeycrispPrice + grannySmithAmount * grannySmithPrice;
                 taxAmount = subtotal * taxRate;
                 totalAmount = taxAmount + subtotal;
@@ -56,9 +61,21 @@ namespace pear
                 subTotalOutput.Text = $"{subtotal.ToString("C")}";
                 taxOutput.Text = $"{taxAmount.ToString("C")}";
                 totalOutput.Text = $"{totalAmount.ToString("C")}";
+                changeButton.Enabled = true;
+                    }
+                else
+                {
+                    //if they order to many apples
+                subTotalOutput.Text = $"";
+                taxOutput.Text = $"";
+                totalOutput.Text = $"";
+                subTotalOutput.Text = $"Insufficient";
+                taxOutput.Text = $"stock";
+                }
             }
             catch
             {
+                //if a lttter is in the input
                 subTotalOutput.Text = $"";
                 taxOutput.Text = $"";
                 totalOutput.Text = $"";
@@ -72,41 +89,112 @@ namespace pear
         {
             try
             {
+                //calculates change  and checks if they have imputeded enough 
                 change = Convert.ToDouble(changeInput.Text);
-                totalChange = change - totalAmount;
-                changeOutput.Text = $"{totalChange.ToString("C")}";
+                if (change >= totalAmount)
+                {
+                    totalChange = change - totalAmount;
+                    changeOutput.Text = $"{totalChange.ToString("C")}";
+                    printButton.Enabled = true;
+                }
+                else
+                {
+                    changeOutput.Text = $"Insufficient funds"; 
+                }
             }
             catch 
             {
+                // if a letter is inputed
                 subTotalOutput.Text = $"";
                 taxOutput.Text = $"";
                 totalOutput.Text = $"";
                 subTotalOutput.Text = $"Input Error";
                 taxOutput.Text = $"Input Error";
                 totalOutput.Text = $"Input Error";
-
             }
         }
 
         private void printButton_Click(object sender, EventArgs e)
         {
+            //prints the reciept
             recipteTitle.Text = $"              Pear";
-           
-            Refresh();
-            Thread.Sleep(500);
-             
-            receiptOutput.Text += $"\n\n\n\n        order number 4092 ";
-            receiptOutput.Text += $"\n\n        September 29, 2022 ";
-
+            receipt.Play();
             Refresh();
             Thread.Sleep(500);
 
-            receiptOutput.Text += $"\nGala          x{galaAmount} @ {galaPrice} ";
-
+            receiptOutput.Text += $"\n\n\n\n    order number 4092 ";
+            receiptOutput.Text += $"\n\n   September 29, 2022 ";
+            receipt.Play();
             Refresh();
             Thread.Sleep(500);
-            receiptOutput.Text += $"\nHoneycrisp    x{honeycrispAmount} @ {honeycrispPrice} ";
-            receiptOutput.Text += $"\nGranny Smith  x{grannySmithAmount} @ {grannySmithPrice} ";
+            if (galaAmount > 0)
+            {
+                receiptOutput.Text += $"\n\nGala          x{galaAmount} @ {galaPrice} ";
+                receipt.Play();
+
+                Refresh();
+                Thread.Sleep(500);
+            }
+
+            if (honeycrispAmount > 0) { 
+            receiptOutput.Text += $"Honeycrisp    x{honeycrispAmount} @ {honeycrispPrice} ";
+            receipt.Play();
+            Refresh();
+            Thread.Sleep(500);
+        }
+            if (grannySmithAmount > 0)
+            {
+                receiptOutput.Text += $"\nGranny Smith  x{grannySmithAmount} @ {grannySmithPrice} ";
+                receipt.Play();
+                Refresh();
+                Thread.Sleep(500);
+            }
+            receiptOutput.Text += $"\n\nSubtotal      {subtotal.ToString("C")}";
+             receipt.Play();
+            Refresh();
+            Thread.Sleep(500);
+
+            receiptOutput.Text += $"\nTax           {taxAmount.ToString("C")}";
+            receipt.Play();
+            Refresh();
+            Thread.Sleep(500);
+
+            receiptOutput.Text += $"\nTotal         {totalAmount.ToString("C")}";
+            receipt.Play();
+            Refresh();
+            Thread.Sleep(500);
+
+            receiptOutput.Text += $"\n\nTendered      {change.ToString("C")}";
+            receipt.Play();
+            Refresh();
+            Thread.Sleep(500);
+
+            receiptOutput.Text += $"\nChange        {totalChange.ToString("C")}";
+            receipt.Play();
+            Refresh();
+            Thread.Sleep(500);
+
+            receiptOutput.Text += $"\n\nThank you for shopping at Pear";
+            newOrderButton.Enabled = true;
+
+        }
+
+        private void newOrderButton_Click(object sender, EventArgs e)
+        {
+            //clears everything to make a new order
+            receiptOutput.Text = $"";
+            subTotalOutput.Text = $"";
+            taxOutput.Text = $"";
+            totalOutput.Text = $"";
+            changeOutput.Text = $"";
+            changeInput.Text = $"0";
+            honeycrispInput.Text = $"0";
+            grannySmithInput.Text = $"0";
+            galaInput.Text = $"0";
+            recipteTitle.Text = $"";
+            newOrderButton.Enabled = false;
+            printButton.Enabled = false;
+            changeButton.Enabled = false;
 
         }
     }
