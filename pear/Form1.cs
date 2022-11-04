@@ -1,4 +1,8 @@
-﻿using System;
+﻿//Spencer Orr
+//Cash register Program
+//Friday November 4th 
+
+using System;
 
 using System.Collections.Generic;
 
@@ -20,13 +24,14 @@ using System.Threading;
 
 using System.Media;
 
+
 namespace pear
 {
     public partial class Form1 : Form
     {
         //create the variables needed
         double galaPrice = 2;
-        double honeycrispPrice= 4;
+        double honeycrispPrice = 4;
         double grannySmithPrice = 5;
         double galaAmount = 0;
         double honeycrispAmount = 0;
@@ -37,8 +42,10 @@ namespace pear
         double subtotal = 0;
         double change = 0;
         double totalChange = 0;
+
         //the print sound 
         SoundPlayer receipt = new SoundPlayer(Properties.Resources.Receipt);
+
         public Form1()
         {
             InitializeComponent();
@@ -52,36 +59,42 @@ namespace pear
                 galaAmount = Convert.ToDouble(galaInput.Text);
                 honeycrispAmount = Convert.ToDouble(honeycrispInput.Text);
                 grannySmithAmount = Convert.ToDouble(grannySmithInput.Text);
-                if (galaAmount + honeycrispAmount + grannySmithAmount < 500)
-                    { 
-                subtotal = galaAmount * galaPrice + honeycrispAmount * honeycrispPrice + grannySmithAmount * grannySmithPrice;
-                taxAmount = subtotal * taxRate;
-                totalAmount = taxAmount + subtotal;
 
-                subTotalOutput.Text = $"{subtotal.ToString("C")}";
-                taxOutput.Text = $"{taxAmount.ToString("C")}";
-                totalOutput.Text = $"{totalAmount.ToString("C")}";
-                changeButton.Enabled = true;
-                    }
+                if (galaAmount + honeycrispAmount + grannySmithAmount < 500)
+                {
+                    subtotal = galaAmount * galaPrice + honeycrispAmount * honeycrispPrice + grannySmithAmount * grannySmithPrice;
+                    taxAmount = subtotal * taxRate;
+                    totalAmount = taxAmount + subtotal;
+
+                    subTotalOutput.Text = $"{subtotal.ToString("C")}";
+                    taxOutput.Text = $"{taxAmount.ToString("C")}";
+                    totalOutput.Text = $"{totalAmount.ToString("C")}";
+                    changeButton.Enabled = true;
+                }
                 else
                 {
                     //if they order to many apples
-                subTotalOutput.Text = $"";
-                taxOutput.Text = $"";
-                totalOutput.Text = $"";
-                subTotalOutput.Text = $"Insufficient";
-                taxOutput.Text = $"stock";
+                    subTotalOutput.Text = $"";
+                    taxOutput.Text = $"";
+                    totalOutput.Text = $"";
+                    subTotalOutput.Text = $"Insufficient";
+                    taxOutput.Text = $"stock";
                 }
             }
             catch
             {
                 //if a lttter is in the input
-                subTotalOutput.Text = $"";
-                taxOutput.Text = $"";
-                totalOutput.Text = $"";
-                subTotalOutput.Text = $"Input Error";
-                taxOutput.Text = $"Input Error";
-                totalOutput.Text = $"Input Error";
+                // if a letter is inputed                
+                subTotalLabel.Text = $"Input Error";
+                taxLabel.Text = $"Input Error";
+                totalLabel.Text = $"Input Error";
+
+                Refresh();
+                Thread.Sleep(2000);
+
+                subTotalLabel.Text = $"Sub Total";
+                taxLabel.Text = $"Tax";
+                totalLabel.Text = $"Total";
             }
         }
 
@@ -91,6 +104,7 @@ namespace pear
             {
                 //calculates change  and checks if they have imputeded enough 
                 change = Convert.ToDouble(changeInput.Text);
+
                 if (change >= totalAmount)
                 {
                     totalChange = change - totalAmount;
@@ -99,18 +113,22 @@ namespace pear
                 }
                 else
                 {
-                    changeOutput.Text = $"Insufficient funds"; 
+                    changeOutput.Text = $"Insufficient funds";
                 }
             }
-            catch 
+            catch
             {
-                // if a letter is inputed
-                subTotalOutput.Text = $"";
-                taxOutput.Text = $"";
-                totalOutput.Text = $"";
-                subTotalOutput.Text = $"Input Error";
-                taxOutput.Text = $"Input Error";
-                totalOutput.Text = $"Input Error";
+                // if a letter is inputed                
+                subTotalLabel.Text = $"Input Error";
+                taxLabel.Text = $"Input Error";
+                totalLabel.Text = $"Input Error";
+
+                Refresh();
+                Thread.Sleep(2000);
+                
+                subTotalLabel.Text = $"Sub Total";
+                taxLabel.Text = $"Tax";
+                totalLabel.Text = $"Total";
             }
         }
 
@@ -127,6 +145,7 @@ namespace pear
             receipt.Play();
             Refresh();
             Thread.Sleep(500);
+
             if (galaAmount > 0)
             {
                 receiptOutput.Text += $"\n\nGala          x{galaAmount} @ {galaPrice} ";
@@ -136,12 +155,13 @@ namespace pear
                 Thread.Sleep(500);
             }
 
-            if (honeycrispAmount > 0) { 
-            receiptOutput.Text += $"Honeycrisp    x{honeycrispAmount} @ {honeycrispPrice} ";
-            receipt.Play();
-            Refresh();
-            Thread.Sleep(500);
-        }
+            if (honeycrispAmount > 0)
+            {
+                receiptOutput.Text += $"Honeycrisp    x{honeycrispAmount} @ {honeycrispPrice} ";
+                receipt.Play();
+                Refresh();
+                Thread.Sleep(500);
+            }
             if (grannySmithAmount > 0)
             {
                 receiptOutput.Text += $"\nGranny Smith  x{grannySmithAmount} @ {grannySmithPrice} ";
@@ -150,7 +170,7 @@ namespace pear
                 Thread.Sleep(500);
             }
             receiptOutput.Text += $"\n\nSubtotal      {subtotal.ToString("C")}";
-             receipt.Play();
+            receipt.Play();
             Refresh();
             Thread.Sleep(500);
 
